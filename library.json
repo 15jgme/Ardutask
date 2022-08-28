@@ -1,0 +1,10 @@
+{
+    "name": "Ardutask",
+    "version": "0.0.1",
+    "dependencies":
+    {
+        "PlatformHelpers": "*"
+    },
+    "includeDir":"PlatformTimer/PlatformTimerImplimentations/include",
+    "srcDir":"PlatformTimer/PlatformTimerImplimentations/src"
+}
