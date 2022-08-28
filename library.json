@@ -6,5 +6,18 @@
         "PlatformHelpers": "*"
     },
     "includeDir":"PlatformTimer/PlatformTimerImplimentations/include",
-    "srcDir":"PlatformTimer/PlatformTimerImplimentations/src"
+    "srcDir":"PlatformTimer/PlatformTimerImplimentations/src",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/15jgme/Ardutask"
+    },
+    "authors":
+    [
+      {
+        "name": "Jackson Empey",
+        "email": "jackson.empey@mail.mcgill.ca"
+      }
+    ],
+    "license": "MIT"
 }
