@@ -6,6 +6,7 @@ class STMTimer : public MultiTime
 {
 public:
     int setTimer(int rate);
+    STMTimer(timerLabel label_t, Taskmanager * tm);
 };
 
 #endif

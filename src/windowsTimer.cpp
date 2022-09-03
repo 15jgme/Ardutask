@@ -1,3 +1,6 @@
+#if defined(_WIN32) 
+#if defined(NATIVE)
+
 #include <windowsTimer.h>
 
 int WindowsTimer::setTimer(int freq)
@@ -11,3 +14,6 @@ int WindowsTimer::setTimer(int freq)
     // Note: need to fill in timerproc
     // https://docs.microsoft.com/en-us/windows/win32/winmsg/using-timers#creating-a-timer
 }
+
+#endif
+#endif

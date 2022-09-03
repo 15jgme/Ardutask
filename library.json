@@ -5,8 +5,8 @@
     {
         "PlatformHelpers": "*"
     },
-    "includeDir":"PlatformTimer/PlatformTimerImplimentations/include",
-    "srcDir":"PlatformTimer/PlatformTimerImplimentations/src",
+    "includeDir":"PlatformTimerImplimentations/include",
+    "srcDir":"PlatformTimerImplimentations/src",
     "repository":
     {
       "type": "git",

@@ -1,4 +1,4 @@
-#include <STMTimer/STMTimer.h>
+#include <STMTimer.h>
 
 int STMTimer::setTimer(int rate)
 {

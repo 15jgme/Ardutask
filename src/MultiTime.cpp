@@ -1,8 +1,9 @@
 #include <MultiTime.h>
+#include <Taskmanager.h>
 
-MultiTime::MultiTime(timerLabel l, Taskmanager * tm)
+MultiTime::MultiTime(timerLabel label_t, Taskmanager * tm)
 {
-    label = l;
+    label = label_t;
     tm_ptr = tm;
 }
 

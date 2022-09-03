@@ -8,11 +8,12 @@ class WindowsTimer : public MultiTime
 {
 public:
     int setTimer(int rate);
+    WindowsTimer(timerLabel label_t, Taskmanager * tm);
     void CALLBACK myTimerProc(
       HWND unnamedParam1,
       UINT unnamedParam2,
       UINT unnamedParam3,
-      DWORD unnamedParam4){timerCallback()}
+      DWORD unnamedParam4){timerCallback();}
 
 };
 
