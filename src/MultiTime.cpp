@@ -1,34 +1,14 @@
 #include <MultiTime.h>
-#include <Taskmanager.h>
 
-MultiTime::MultiTime(timerLabel label_t, Taskmanager * tm)
+MultiTime::MultiTime(int (*fn_cb_s)(), int label_s)
 {
-    label = label_t;
-    tm_ptr = tm;
+    fn_cb = fn_cb_s;
+    label = label_s;
 }
 
 int MultiTime::timerCallback()
 {
     /* Check which type of timer we are, hit the desired callback accordingly */
-    switch(label)
-    {
-    case HRT1:
-        tm_ptr->HRT1_callback();
-        break;
-    case HRT2:
-        tm_ptr->HRT2_callback();
-        break;
-    case HRT3:
-        tm_ptr->HRT3_callback();
-        break;
-    case LRT1:
-        tm_ptr->LRT1_callback();
-        break;
-    case LRT2:
-        tm_ptr->LRT2_callback();
-        break;
-    default:
-        break;
-    }
+    fn_cb(); // Run callback function
     return 1;
 }

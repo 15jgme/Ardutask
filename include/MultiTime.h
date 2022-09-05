@@ -1,24 +1,15 @@
-#ifndef MULTITIME_H
-#define MULTITIME_H
+#pragma once
 
-// #include <PlatformDefineList.h>
-// #include <Taskmanager.h>
-
-
-enum timerLabel {HRT1, HRT2, HRT3, LRT1, LRT2};
-class Taskmanager;
+// #include <timerLabel.h>
 
 class MultiTime
 {
 protected:
-    int rate; //Hz
-    Taskmanager * tm_ptr;
+    float rate; //Hz
+    int (*fn_cb)();
+    int label;
 public:
-    timerLabel label;
-    MultiTime(timerLabel label_t, Taskmanager * tm);
-    virtual int setTimer(int rate);
+    MultiTime(int (*fn_cb_s)(), int label_s);
+    virtual int setTimer(float rate_s);
     int timerCallback();
 };
-
-
-#endif

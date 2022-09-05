@@ -2,12 +2,14 @@
 #if defined(NATIVE)
 
 #include <windowsTimer.h>
+#include <MultiTime.h>
 
-int WindowsTimer::setTimer(int freq)
+int WindowsTimer::setTimer(float rate_s)
 {
+    rate = rate_s;
     TIMERPROC Timerproc;
     auto res = SetTimer(NULL,                // handle to main window 
-                        label,                   // timer identifier 
+                        label,                   // timer identifier change! 
                         int(1/rate),                     // 5-second interval 
                         (TIMERPROC) &myTimerProc); // timer callback
     return 1;

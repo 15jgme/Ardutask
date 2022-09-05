@@ -1,11 +1,16 @@
 #include <Task.h>
 
-bool Task::shouldRun(int trigger)
+bool Task::updateShouldRun(int dynamicDivisor)
 {
-    if(counter >= trigger)
+    counter++;
+    switch (counter >= (divisor*dynamicDivisor))
     {
+    case true:
         return true;
-    }else{
+        counter = 0;
+        break;
+    case false:
         return false;
+        break;
     }
 }

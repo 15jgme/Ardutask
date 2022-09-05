@@ -1,12 +1,17 @@
+#pragma once
 /* This file defines the timerTypes based on the 
 type of system. Tries to ensure easy crossplatform. */
 
 #if defined(STM32F405xx)
     #include <STMTimer.h>
-    typedef STMTimer timerType;
+    class STMTimer;
+    // typedef STMTimer timerType;
+    #define timerType STMTimer 
 #elif defined(_WIN32)
     #if defined(NATIVE)
         #include <windowsTimer.h>
-        typedef WindowsTimer timerType;
+        class WindowsTimer;
+        // typedef WindowsTimer timerType;
+        #define timerType WindowsTimer
     #endif
 #endif

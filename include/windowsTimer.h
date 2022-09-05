@@ -1,14 +1,16 @@
-#include <MultiTime.h>
-#include <windows.h>
+#pragma once
 
-#ifndef WINDOWSTIMER_H
-#define WINDOWSTIMER_H
+#include <MultiTime.h>
+#include <timerLabel.h>
+
+class Taskmanager;
+#include <windows.h>
 
 class WindowsTimer : public MultiTime
 {
 public:
-    int setTimer(int rate);
-    WindowsTimer(timerLabel label_t, Taskmanager * tm);
+    int setTimer(float rate_s);
+    WindowsTimer(int (*fn_cb_s)(), int label_s);
     void CALLBACK myTimerProc(
       HWND unnamedParam1,
       UINT unnamedParam2,
@@ -17,4 +19,3 @@ public:
 
 };
 
-#endif
