@@ -1,7 +1,7 @@
 #pragma once
 
-#include <MultiTime.h>
-#include <timerLabel.h>
+#include "MultiTime.h"
+#include "timerLabel.h"
 // class MultiTime;
 class Taskmanager;
 

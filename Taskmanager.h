@@ -3,9 +3,9 @@
 #define TASK_LIMIT 24 // Current limit to 24 tasks
 #define TASK_STACK_SIZE 24 // Current limit to 24 tasks can be stacked
 
-#include <Task.h>
-#include <timerLabel.h>
-#include <PlatformDefineList.h>
+#include "Task.h"
+#include "timerLabel.h"
+#include "PlatformDefineList.h"
 
 enum timerLabel;
 
@@ -36,6 +36,7 @@ class Taskmanager
 
 public:
     Taskmanager();
+    int run();
     int addtask(Task * t);
     int removetask(int ID, int inst);
     /* Declare all timer callbacks */

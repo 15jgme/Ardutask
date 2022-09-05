@@ -1,6 +1,6 @@
-#include <Taskmanager.h>
+#include "Taskmanager.h"
 // #include <MultiTime.h>
-#include <helpers.h>
+#include "helpers.h"
 
 Taskmanager::Taskmanager()
 {
@@ -17,6 +17,17 @@ Taskmanager::Taskmanager()
     HRT3_t.setTimer(HRT3_freq); // Hz
     LRT1_t.setTimer(LRT1_freq); // Hz
     LRT1_t.setTimer(LRT2_freq); // Hz
+}
+
+int Taskmanager::run()
+{
+    taskList[todoStack[0]].update(); // Run task in stack
+    for(int i = 0; i < todoStackSize; i++)
+    {
+        todoStack[i] = todoStack[i+1];
+    }
+    todoStackSize--;
+    return 1;
 }
 
 int Taskmanager::addtask(Task * t)
@@ -47,22 +58,32 @@ int Taskmanager::addtask(Task * t)
     {
         HRT1List[HRT1List_size] = task_loc;
         HRT1List_size++;
+        int div = HRT1_freq/t->getRate() > float(int(HRT1_freq/t->getRate())) ? int(HRT1_freq/t->getRate())+1 : int(HRT1_freq/t->getRate());
+        t->setDivisor(div);
     } else if (HRT1_freq > t->getRate() > HRT2_freq)
     {
         HRT2List[HRT2List_size] = task_loc;
         HRT2List_size++;
+        int div = HRT2_freq/t->getRate() > float(int(HRT2_freq/t->getRate())) ? int(HRT2_freq/t->getRate())+1 : int(HRT2_freq/t->getRate());
+        t->setDivisor(div);
     } else if (HRT3_freq > t->getRate() > HRT3_freq)
     {
         HRT3List[HRT3List_size] = task_loc;
         HRT3List_size++;
+        int div = HRT3_freq/t->getRate() > float(int(HRT3_freq/t->getRate())) ? int(HRT3_freq/t->getRate())+1 : int(HRT3_freq/t->getRate());
+        t->setDivisor(div);
     } else if (LRT1_freq > t->getRate() > LRT1_freq)
     {
         LRT1List[LRT1List_size] = task_loc;
         LRT1List_size++;
+        int div = LRT1_freq/t->getRate() > float(int(LRT1_freq/t->getRate())) ? int(LRT1_freq/t->getRate())+1 : int(LRT1_freq/t->getRate());
+        t->setDivisor(div);
     } else if (LRT2_freq > t->getRate())
     {
         LRT1List[LRT1List_size] = task_loc;
         LRT1List_size++;
+        int div = LRT2_freq/t->getRate() > float(int(LRT2_freq/t->getRate())) ? int(LRT2_freq/t->getRate())+1 : int(LRT2_freq/t->getRate());
+        t->setDivisor(div);
     } // Add an error if none of these options
     
 
@@ -107,6 +128,7 @@ int Taskmanager::HRT1_callback()
             todoStack[todoStackSize] = HRT1List[i]; // Add current task to todo stack
         }
     }
+    todoStackSize++;
     return 1;
 }
 
@@ -120,6 +142,7 @@ int Taskmanager::HRT2_callback()
             todoStack[todoStackSize] = HRT2List[i]; // Add current task to todo stack
         }
     }
+    todoStackSize++;
     return 1;
 }
 
@@ -133,6 +156,7 @@ int Taskmanager::HRT3_callback()
             todoStack[todoStackSize] = HRT3List[i]; // Add current task to todo stack
         }
     }
+    todoStackSize++;
     return 1;
 }
 
@@ -146,6 +170,7 @@ int Taskmanager::LRT1_callback()
             todoStack[todoStackSize] = LRT1List[i]; // Add current task to todo stack
         }
     }
+    todoStackSize++;
     return 1;
 }
 
@@ -159,5 +184,6 @@ int Taskmanager::LRT2_callback()
             todoStack[todoStackSize] = LRT2List[i]; // Add current task to todo stack
         }
     }
+    todoStackSize++;
     return 1;
 }

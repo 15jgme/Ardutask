@@ -1,4 +1,9 @@
-#include <Task.h>
+#include "Task.h"
+
+Task::Task(float rate_des)
+{
+    rate_hz = rate_des;
+}
 
 bool Task::updateShouldRun(int dynamicDivisor)
 {

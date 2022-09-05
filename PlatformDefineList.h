@@ -3,13 +3,13 @@
 type of system. Tries to ensure easy crossplatform. */
 
 #if defined(STM32F405xx)
-    #include <STMTimer.h>
+    #include "STMTimer.h"
     class STMTimer;
     // typedef STMTimer timerType;
     #define timerType STMTimer 
 #elif defined(_WIN32)
     #if defined(NATIVE)
-        #include <windowsTimer.h>
+        #include "windowsTimer.h"
         class WindowsTimer;
         // typedef WindowsTimer timerType;
         #define timerType WindowsTimer

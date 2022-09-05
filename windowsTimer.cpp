@@ -1,8 +1,8 @@
 #if defined(_WIN32) 
 #if defined(NATIVE)
 
-#include <windowsTimer.h>
-#include <MultiTime.h>
+#include "windowsTimer.h"
+#include "MultiTime.h"
 
 int WindowsTimer::setTimer(float rate_s)
 {

@@ -1,5 +1,5 @@
-#include <STMTimer.h>
-#include <MultiTime.h>
+#include "STMTimer.h"
+#include "MultiTime.h"
 
 int STMTimer::setTimer(float rate_s)
 {

@@ -1,4 +1,4 @@
-#include <MultiTime.h>
+#include "MultiTime.h"
 
 MultiTime::MultiTime(int (*fn_cb_s)(), int label_s)
 {
