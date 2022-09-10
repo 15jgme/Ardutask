@@ -11,7 +11,7 @@ enum timerLabel;
 
 class Taskmanager
 {
-    static Task taskList[TASK_LIMIT]; // List of pointers to task objects. This is filled as tasks are added
+    static Task* taskList[TASK_LIMIT]; // List of pointers to task objects. This is filled as tasks are added
     static int todoStack[TASK_STACK_SIZE]; // List of tasks to do, low indexed tasks will be completed first
 
     static int HRT1List[TASK_LIMIT]; // HRT1 arrary list
@@ -52,5 +52,5 @@ public:
     timerType HRT3_t = timerType(&HRT3_callback, static_cast<int>(HRT3));
     timerType LRT1_t = timerType(&LRT1_callback, static_cast<int>(LRT1));
     timerType LRT2_t = timerType(&LRT1_callback, static_cast<int>(LRT2));
-
+    virtual ~Taskmanager(){}
 };

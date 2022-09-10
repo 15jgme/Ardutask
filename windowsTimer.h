@@ -9,7 +9,7 @@ class Taskmanager;
 class WindowsTimer : public MultiTime
 {
 public:
-    int setTimer(float rate_s) override;
+    int setTimer(float rate_s);
     WindowsTimer(int (*fn_cb_s)(), int label_s);
     void CALLBACK myTimerProc(
       HWND unnamedParam1,

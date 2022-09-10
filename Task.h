@@ -1,6 +1,4 @@
-#ifndef TASK_H
-#define TASK_H
-
+#pragma once
 /*
 
 This is the base class defining the required implementations of a given task. The Taskmanager 
@@ -19,7 +17,8 @@ class Task
     int counter = 0; // This is the counter used to determine if the process should be ran
     int divisor = 1; // This is assigned by task manager depending on timer assignment, it represents the amount of timer callbacks before the task is added to the stack 
 public:
-    explicit Task(float rate_des); // Note: Maybe populate inst here?
+    Task(float rate_des); // Normal constructor
+    Task(){rate_hz = 1.0f;} //Dummy constructor
     int getID(){return task_ID;}
     int getInst(){return inst;}
     int getRate(){return rate_hz;}
@@ -27,9 +26,7 @@ public:
     bool updateShouldRun(int dynamicDivisor);
     void setInst(int i){inst = i;}
     void setDivisor(int i){divisor = i;}
-    virtual int init();
-    virtual int update();
+    virtual int init(){return 0;}
+    virtual int update(){return 0;}
     ~Task(){}
 };
-
-#endif
