@@ -12,8 +12,8 @@ class Task
     float rate_hz; // Target run rate of the process 
 
     /* AUTOMATICALLY POPULATED */
-    int task_ID; // This value defines a given process type and must be unique!
-    int inst; // This value defines the instance of a given process, this is autofilled
+    int task_ID = 0; // This value defines a given process type and must be unique!
+    int inst = 0; // This value defines the instance of a given process, this is autofilled
     int counter = 0; // This is the counter used to determine if the process should be ran
     int divisor = 1; // This is assigned by task manager depending on timer assignment, it represents the amount of timer callbacks before the task is added to the stack 
 public:
@@ -21,7 +21,7 @@ public:
     Task(){rate_hz = 1.0f;} //Dummy constructor
     int getID(){return task_ID;}
     int getInst(){return inst;}
-    int getRate(){return rate_hz;}
+    float getRate(){return rate_hz;}
     int increaseCount(){counter++; return 1;}
     bool updateShouldRun(int dynamicDivisor);
     void setInst(int i){inst = i;}

@@ -25,6 +25,7 @@ void runMsgPump()
 
         TranslateMessage(&msg); // translates virtual-key codes 
         DispatchMessage(&msg);  // dispatches message to window 
+        break;
     }
 }
 

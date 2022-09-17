@@ -11,8 +11,8 @@ bool Task::updateShouldRun(int dynamicDivisor)
     switch (counter >= (divisor*dynamicDivisor))
     {
     case true:
-        return true;
         counter = 0;
+        return true;
         break;
     case false:
         return false;

@@ -25,11 +25,11 @@ class Taskmanager
     static int LRT2List[TASK_LIMIT]; // LRT2 arrary list
     static int LRT2List_size; // Size of LRT2 list
 
-    float HRT1_freq = 100; // Frequency of timer 1, Hz
-    float HRT2_freq = 50; // Frequency of timer 1, Hz
-    float HRT3_freq = 10; // Frequency of timer 1, Hz
-    float LRT1_freq = 1; // Frequency of timer 1, Hz
-    float LRT2_freq = 0.1; // Frequency of timer 1, Hz
+    float HRT1_freq = 100.0f; // Frequency of timer 1, Hz
+    float HRT2_freq = 50.0f; // Frequency of timer 1, Hz
+    float HRT3_freq = 10.0f; // Frequency of timer 1, Hz
+    float LRT1_freq = 1.0f; // Frequency of timer 1, Hz
+    float LRT2_freq = 0.1f; // Frequency of timer 1, Hz
 
     static short todoStackSize; // Current number of tasks in the todo list
     short tasksUsed = 0; // Current number of task slots used
@@ -51,6 +51,6 @@ public:
     timerType HRT2_t = timerType(&HRT2_callback, static_cast<int>(HRT2));
     timerType HRT3_t = timerType(&HRT3_callback, static_cast<int>(HRT3));
     timerType LRT1_t = timerType(&LRT1_callback, static_cast<int>(LRT1));
-    timerType LRT2_t = timerType(&LRT1_callback, static_cast<int>(LRT2));
+    timerType LRT2_t = timerType(&LRT2_callback, static_cast<int>(LRT2));
     virtual ~Taskmanager(){}
 };

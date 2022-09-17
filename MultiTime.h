@@ -1,10 +1,11 @@
 #pragma once
 
+typedef int (*callback)();
 class MultiTime
 {
 protected:
     float rate; //Hz
-    int (*fn_cb)();
+    callback fn_cb;
     int label;
 public:
     MultiTime(int(*fn_cb_s)(), int label_s);

@@ -1,6 +1,7 @@
 #include "Taskmanager.h"
 // #include <MultiTime.h>
 #include "helpers.h"
+#include <iostream>
 
 /* Initialize statics in cpp at the bequest of the compiler */
 int Taskmanager::HRT1List_size = 0;
@@ -24,7 +25,7 @@ Taskmanager::Taskmanager()
     HRT2_t.setTimer(HRT2_freq); // Hz
     HRT3_t.setTimer(HRT3_freq); // Hz
     LRT1_t.setTimer(LRT1_freq); // Hz
-    LRT1_t.setTimer(LRT2_freq); // Hz
+    LRT2_t.setTimer(LRT2_freq); // Hz
 }
 
 int Taskmanager::run()
@@ -32,13 +33,12 @@ int Taskmanager::run()
     if(todoStackSize > 0)
     {
         taskList[todoStack[0]]->update(); // Run task in stack
+        // log_m(std::to_string(todoStackSize).c_str());
         for(int i = 0; i < todoStackSize; i++)
         {
             todoStack[i] = todoStack[i+1];
-            todoStackSize--;
         }
-        
-        log_m(std::to_string(todoStackSize).c_str());
+        todoStackSize--;
     }
     return 1;
 }
@@ -65,37 +65,38 @@ int Taskmanager::addtask(Task * t)
 
     int task_loc = tasksUsed; // Local variable
     tasksUsed++; // Increase used tasks
+    float taskRate = t->getRate();
 
     /* Perform timer assignment */
-    if(t->getRate() > HRT1_freq)
+    if(taskRate > HRT1_freq)
     {
         HRT1List[HRT1List_size] = task_loc;
         HRT1List_size++;
-        int div = HRT1_freq/t->getRate() > float(int(HRT1_freq/t->getRate())) ? int(HRT1_freq/t->getRate())+1 : int(HRT1_freq/t->getRate());
+        int div = HRT1_freq/taskRate > float(int(HRT1_freq/taskRate)) ? int(HRT1_freq/taskRate)+1 : int(HRT1_freq/taskRate);
         t->setDivisor(div);
-    } else if (HRT1_freq > t->getRate() > HRT2_freq)
+    } else if (HRT1_freq > taskRate >= HRT2_freq)
     {
         HRT2List[HRT2List_size] = task_loc;
         HRT2List_size++;
-        int div = HRT2_freq/t->getRate() > float(int(HRT2_freq/t->getRate())) ? int(HRT2_freq/t->getRate())+1 : int(HRT2_freq/t->getRate());
+        int div = HRT2_freq/taskRate > float(int(HRT2_freq/taskRate)) ? int(HRT2_freq/taskRate)+1 : int(HRT2_freq/taskRate);
         t->setDivisor(div);
-    } else if (HRT3_freq > t->getRate() > HRT3_freq)
+    } else if (HRT2_freq > taskRate >= HRT3_freq)
     {
         HRT3List[HRT3List_size] = task_loc;
         HRT3List_size++;
-        int div = HRT3_freq/t->getRate() > float(int(HRT3_freq/t->getRate())) ? int(HRT3_freq/t->getRate())+1 : int(HRT3_freq/t->getRate());
+        int div = HRT3_freq/taskRate > float(int(HRT3_freq/taskRate)) ? int(HRT3_freq/taskRate)+1 : int(HRT3_freq/taskRate);
         t->setDivisor(div);
-    } else if (LRT1_freq > t->getRate() > LRT1_freq)
+    } else if (LRT1_freq > taskRate >= LRT2_freq)
     {
         LRT1List[LRT1List_size] = task_loc;
         LRT1List_size++;
-        int div = LRT1_freq/t->getRate() > float(int(LRT1_freq/t->getRate())) ? int(LRT1_freq/t->getRate())+1 : int(LRT1_freq/t->getRate());
+        int div = LRT1_freq/taskRate > float(int(LRT1_freq/taskRate)) ? int(LRT1_freq/taskRate)+1 : int(LRT1_freq/taskRate);
         t->setDivisor(div);
-    } else if (LRT2_freq > t->getRate())
+    } else if (LRT2_freq > taskRate)
     {
         LRT1List[LRT1List_size] = task_loc;
         LRT1List_size++;
-        int div = LRT2_freq/t->getRate() > float(int(LRT2_freq/t->getRate())) ? int(LRT2_freq/t->getRate())+1 : int(LRT2_freq/t->getRate());
+        int div = LRT2_freq/taskRate > float(int(LRT2_freq/taskRate)) ? int(LRT2_freq/taskRate)+1 : int(LRT2_freq/taskRate);
         t->setDivisor(div);
     } // Add an error if none of these options
     
@@ -133,75 +134,75 @@ int Taskmanager::removetask(int ID, int inst)
 
 int Taskmanager::HRT1_callback()
 {
-    log_m("bizz1");
+    // log_m("bizz1");
     for(int i = 0; i < HRT1List_size; i++)
     {
         taskList[HRT1List[i]]->increaseCount(); // Increase timer
         if(taskList[HRT1List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
         {
             todoStack[todoStackSize] = HRT1List[i]; // Add current task to todo stack
+            todoStackSize++;
         }
     }
-    todoStackSize++;
     return 1;
 }
 
 int Taskmanager::HRT2_callback()
 {
-    log_m("bizz2");
+    // log_m("bizz2");
     for(int i = 0; i < HRT2List_size; i++)
     {
         taskList[HRT2List[i]]->increaseCount(); // Increase timer
         if(taskList[HRT2List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
         {
             todoStack[todoStackSize] = HRT2List[i]; // Add current task to todo stack
+            todoStackSize++;
         }
     }
-    todoStackSize++;
     return 1;
 }
 
 int Taskmanager::HRT3_callback()
 {
-    log_m("bizz3");
+    // log_m("bizz3");
     for(int i = 0; i < HRT3List_size; i++)
     {
         taskList[HRT3List[i]]->increaseCount(); // Increase timer
         if(taskList[HRT3List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
         {
             todoStack[todoStackSize] = HRT3List[i]; // Add current task to todo stack
+            todoStackSize++;
         }
     }
-    todoStackSize++;
     return 1;
 }
 
 int Taskmanager::LRT1_callback()
 {
-    log_m("bizz4");
+    // log_m("bizz4");
     for(int i = 0; i < LRT1List_size; i++)
     {
         taskList[LRT1List[i]]->increaseCount(); // Increase timer
         if(taskList[LRT1List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
         {
             todoStack[todoStackSize] = LRT1List[i]; // Add current task to todo stack
+            todoStackSize++;
         }
     }
-    todoStackSize++;
     return 1;
 }
 
 int Taskmanager::LRT2_callback()
 {
-    log_m("bizz5");
+    // log_m("bizz5");
     for(int i = 0; i < LRT2List_size; i++)
     {
         taskList[LRT2List[i]]->increaseCount(); // Increase timer
         if(taskList[LRT2List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
         {
             todoStack[todoStackSize] = LRT2List[i]; // Add current task to todo stack
+            todoStackSize++;
         }
     }
-    todoStackSize++;
     return 1;
 }
