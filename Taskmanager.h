@@ -25,11 +25,11 @@ class Taskmanager
     static int LRT2List[TASK_LIMIT]; // LRT2 arrary list
     static int LRT2List_size; // Size of LRT2 list
 
-    float HRT1_freq = 100.0f; // Frequency of timer 1, Hz
-    float HRT2_freq = 50.0f; // Frequency of timer 1, Hz
-    float HRT3_freq = 10.0f; // Frequency of timer 1, Hz
-    float LRT1_freq = 1.0f; // Frequency of timer 1, Hz
-    float LRT2_freq = 0.1f; // Frequency of timer 1, Hz
+    float HRT1_freq = 100.0f; // Frequency of HR timer 1, Hz
+    float HRT2_freq = 50.0f; // Frequency of HR timer 2, Hz
+    float HRT3_freq = 10.0f; // Frequency of HR timer 3, Hz
+    float LRT1_freq = 1.0f; // Frequency of LR timer 1, Hz
+    float LRT2_freq = 0.1f; // Frequency of LR timer 2, Hz
 
     static short todoStackSize; // Current number of tasks in the todo list
     short tasksUsed = 0; // Current number of task slots used
