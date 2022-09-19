@@ -1,6 +1,6 @@
 {
     "name": "Ardutask",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "(WIP) A multi-platform task delegation library that lets you write several arduino-like tasks and run them at a desired rate",
     "keywords": "Taskmanager, Multi-platform",
     "dependencies":
