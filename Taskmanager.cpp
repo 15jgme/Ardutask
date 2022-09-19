@@ -9,14 +9,14 @@ int Taskmanager::HRT2List_size = 0;
 int Taskmanager::HRT3List_size = 0;
 int Taskmanager::LRT1List_size = 0;
 int Taskmanager::LRT2List_size = 0;
-short Taskmanager::todoStackSize = 0;
+volatile short Taskmanager::todoStackSize = 0;
 
 int Taskmanager::HRT1List[TASK_LIMIT];
 int Taskmanager::HRT2List[TASK_LIMIT];
 int Taskmanager::HRT3List[TASK_LIMIT];
 int Taskmanager::LRT1List[TASK_LIMIT];
 int Taskmanager::LRT2List[TASK_LIMIT];
-int Taskmanager::todoStack[TASK_STACK_SIZE];
+volatile int Taskmanager::todoStack[TASK_STACK_SIZE];
 Task* Taskmanager::taskList[TASK_LIMIT];
 
 Taskmanager::Taskmanager()
@@ -68,40 +68,39 @@ int Taskmanager::addtask(Task * t)
     float taskRate = t->getRate();
 
     /* Perform timer assignment */
-    if(taskRate > HRT2_freq)
+    if(taskRate >= HRT2_freq)
     {
         HRT1List[HRT1List_size] = task_loc;
         HRT1List_size++;
         int div = HRT1_freq/taskRate > float(int(HRT1_freq/taskRate)) ? int(HRT1_freq/taskRate)+1 : int(HRT1_freq/taskRate);
         t->setDivisor(div);
-    } else if (HRT2_freq > taskRate >= HRT3_freq)
+    } else if (HRT2_freq >= taskRate && taskRate > HRT3_freq)
     {
         HRT2List[HRT2List_size] = task_loc;
         HRT2List_size++;
         int div = HRT2_freq/taskRate > float(int(HRT2_freq/taskRate)) ? int(HRT2_freq/taskRate)+1 : int(HRT2_freq/taskRate);
         t->setDivisor(div);
-    } else if (HRT3_freq > taskRate >= LRT1_freq)
+    } else if (HRT3_freq >= taskRate && taskRate > LRT1_freq)
     {
         HRT3List[HRT3List_size] = task_loc;
         HRT3List_size++;
         int div = HRT3_freq/taskRate > float(int(HRT3_freq/taskRate)) ? int(HRT3_freq/taskRate)+1 : int(HRT3_freq/taskRate);
         t->setDivisor(div);
-    } else if (LRT1_freq > taskRate >= LRT2_freq)
+    } else if (LRT1_freq >= taskRate && taskRate > LRT2_freq)
     {
         LRT1List[LRT1List_size] = task_loc;
         LRT1List_size++;
         int div = LRT1_freq/taskRate > float(int(LRT1_freq/taskRate)) ? int(LRT1_freq/taskRate)+1 : int(LRT1_freq/taskRate);
         t->setDivisor(div);
-    } else if (LRT2_freq > taskRate)
+    } else if (LRT2_freq >= taskRate)
     {
-        LRT1List[LRT1List_size] = task_loc;
-        LRT1List_size++;
+        LRT2List[LRT2List_size] = task_loc;
+        LRT2List_size++;
         int div = LRT2_freq/taskRate > float(int(LRT2_freq/taskRate)) ? int(LRT2_freq/taskRate)+1 : int(LRT2_freq/taskRate);
         t->setDivisor(div);
-    } // Add an error if none of these options
-    else
-    {
-        log_m("BIG PROBLEM");
+    }else{
+        log_m("Error: Timer not assigned for task");
+        return 0;
     }
     
 
@@ -119,7 +118,7 @@ int Taskmanager::removetask(int ID, int inst)
     {
         if(taskList[i]->getID() == ID && taskList[i]->getInst())
         {
-            found == true;
+            found = true;
             break;
         }
     }
@@ -136,9 +135,8 @@ int Taskmanager::removetask(int ID, int inst)
     return 1;
 }
 
-int Taskmanager::HRT1_callback()
+void Taskmanager::HRT1_callback()
 {
-    // log_m("bizz1");
     for(int i = 0; i < HRT1List_size; i++)
     {
         if(taskList[HRT1List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -147,12 +145,10 @@ int Taskmanager::HRT1_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }
 
-int Taskmanager::HRT2_callback()
+void Taskmanager::HRT2_callback()
 {
-    // log_m("bizz2");
     for(int i = 0; i < HRT2List_size; i++)
     {
         if(taskList[HRT2List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -161,12 +157,10 @@ int Taskmanager::HRT2_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }
 
-int Taskmanager::HRT3_callback()
+void Taskmanager::HRT3_callback()
 {
-    // log_m("bizz3");
     for(int i = 0; i < HRT3List_size; i++)
     {
         if(taskList[HRT3List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -175,12 +169,10 @@ int Taskmanager::HRT3_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }
 
-int Taskmanager::LRT1_callback()
+void Taskmanager::LRT1_callback()
 {
-    // log_m("bizz4");
     for(int i = 0; i < LRT1List_size; i++)
     {
         if(taskList[LRT1List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -189,12 +181,10 @@ int Taskmanager::LRT1_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }
 
-int Taskmanager::LRT2_callback()
+void Taskmanager::LRT2_callback()
 {
-    // log_m("bizz5");
     for(int i = 0; i < LRT2List_size; i++)
     {
         if(taskList[LRT2List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -203,5 +193,4 @@ int Taskmanager::LRT2_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }

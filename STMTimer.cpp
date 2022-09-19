@@ -1,7 +1,7 @@
 #include "STMTimer.h"
 #include "MultiTime.h"
 
-STMTimer::STMTimer(int (*fn_cb_s)(), int label_s):MultiTime(*fn_cb_s, label_s)
+STMTimer::STMTimer(void (*fn_cb_s)(), int label_s):MultiTime(*fn_cb_s, label_s)
 {
 }
 
