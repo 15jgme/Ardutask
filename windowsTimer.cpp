@@ -8,7 +8,7 @@
 
 std::map<UINT_PTR, WindowsTimer*> WindowsTimer::m_CMyClassMap;  //definition
 
-WindowsTimer::WindowsTimer(int (*fn_cb_s)(), int label_s):MultiTime(*fn_cb_s, label_s)
+WindowsTimer::WindowsTimer(void (*fn_cb_s)(), int label_s):MultiTime(*fn_cb_s, label_s)
 {
 
 }

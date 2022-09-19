@@ -9,14 +9,14 @@ int Taskmanager::HRT2List_size = 0;
 int Taskmanager::HRT3List_size = 0;
 int Taskmanager::LRT1List_size = 0;
 int Taskmanager::LRT2List_size = 0;
-short Taskmanager::todoStackSize = 0;
+volatile short Taskmanager::todoStackSize = 0;
 
 int Taskmanager::HRT1List[TASK_LIMIT];
 int Taskmanager::HRT2List[TASK_LIMIT];
 int Taskmanager::HRT3List[TASK_LIMIT];
 int Taskmanager::LRT1List[TASK_LIMIT];
 int Taskmanager::LRT2List[TASK_LIMIT];
-int Taskmanager::todoStack[TASK_STACK_SIZE];
+volatile int Taskmanager::todoStack[TASK_STACK_SIZE];
 Task* Taskmanager::taskList[TASK_LIMIT];
 
 Taskmanager::Taskmanager()
@@ -118,7 +118,7 @@ int Taskmanager::removetask(int ID, int inst)
     {
         if(taskList[i]->getID() == ID && taskList[i]->getInst())
         {
-            found == true;
+            found = true;
             break;
         }
     }
@@ -135,9 +135,8 @@ int Taskmanager::removetask(int ID, int inst)
     return 1;
 }
 
-int Taskmanager::HRT1_callback()
+void Taskmanager::HRT1_callback()
 {
-    // log_m("bizz1");
     for(int i = 0; i < HRT1List_size; i++)
     {
         if(taskList[HRT1List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -146,12 +145,10 @@ int Taskmanager::HRT1_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }
 
-int Taskmanager::HRT2_callback()
+void Taskmanager::HRT2_callback()
 {
-    // log_m("bizz2");
     for(int i = 0; i < HRT2List_size; i++)
     {
         if(taskList[HRT2List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -160,12 +157,10 @@ int Taskmanager::HRT2_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }
 
-int Taskmanager::HRT3_callback()
+void Taskmanager::HRT3_callback()
 {
-    // log_m("bizz3");
     for(int i = 0; i < HRT3List_size; i++)
     {
         if(taskList[HRT3List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -174,12 +169,10 @@ int Taskmanager::HRT3_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }
 
-int Taskmanager::LRT1_callback()
+void Taskmanager::LRT1_callback()
 {
-    // log_m("bizz4");
     for(int i = 0; i < LRT1List_size; i++)
     {
         if(taskList[LRT1List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -188,12 +181,10 @@ int Taskmanager::LRT1_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }
 
-int Taskmanager::LRT2_callback()
+void Taskmanager::LRT2_callback()
 {
-    // log_m("bizz5");
     for(int i = 0; i < LRT2List_size; i++)
     {
         if(taskList[LRT2List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
@@ -202,5 +193,4 @@ int Taskmanager::LRT2_callback()
             todoStackSize++;
         }
     }
-    return 1;
 }

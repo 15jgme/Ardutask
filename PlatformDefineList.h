@@ -7,6 +7,11 @@ type of system. Tries to ensure easy crossplatform. */
     // class STMTimer;
     // typedef STMTimer timerType;
     #define timerType STMTimer
+#elif defined(TEENSY)
+    #include "TeensyTimer.h"
+    // class STMTimer;
+    // typedef STMTimer timerType;
+    #define timerType TeensyTimer
 #elif defined(_WIN32)
     #if defined(NATIVE)
         #include "windowsTimer.h"

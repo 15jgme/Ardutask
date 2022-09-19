@@ -11,7 +11,7 @@ class WindowsTimer : public MultiTime
 {
 public:
   int setTimer(float rate_s);
-  WindowsTimer(int (*fn_cb_s)(), int label_s);
+  WindowsTimer(void (*fn_cb_s)(), int label_s);
   static void CALLBACK myTimerProc(
     HWND unnamedParam1,
     UINT unnamedParam2,
