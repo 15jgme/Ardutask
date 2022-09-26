@@ -22,13 +22,18 @@ int WindowsTimer::setTimer(float rate_s)
 {
     rate = rate_s;
     TIMERPROC Timerproc;
-    UINT_PTR id = SetTimer(NULL,                // handle to main window 
+    id = SetTimer(NULL,                // handle to main window 
                         label,                   // timer identifier change! 
                         int(1000.0f/rate),                     // 5-second interval 
                         (TIMERPROC) &myTimerProc); // timer callback
     
     m_CMyClassMap[id] = this; 
     return 1;
+}
+
+WindowsTimer::~WindowsTimer()
+{
+    KillTimer(NULL, id);
 }
 
 #endif

@@ -1,3 +1,5 @@
+/* This is a testing class used to measure if taskManager is meeting frequency requirements */
+
 #include <Task.h>
 #include <helpers.h>
 #include <windows.h>
