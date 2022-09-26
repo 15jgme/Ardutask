@@ -11,4 +11,5 @@ public:
     MultiTime(void(*fn_cb_s)(), int label_s);
     virtual int setTimer(float rate_s) = 0;
     int timerCallback();
+    virtual ~MultiTime(){};
 };

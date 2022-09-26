@@ -9,6 +9,7 @@ class Taskmanager;
 
 class WindowsTimer : public MultiTime
 {
+  UINT_PTR id;
 public:
   int setTimer(float rate_s);
   WindowsTimer(void (*fn_cb_s)(), int label_s);
@@ -18,6 +19,7 @@ public:
     UINT_PTR idEvent,
     DWORD unnamedParam4);
   static std::map<UINT_PTR, WindowsTimer*> m_CMyClassMap; //declaration
+  ~WindowsTimer();
 
 };
 
