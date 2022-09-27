@@ -52,6 +52,7 @@ jobs:
     - name: Run PlatformIO
       run: |
         cd D:/a/Ardutask/Ardutask-demo-project
+        pio lib --global install PlatformHelpers
         pio run --environment native
       env:
         PLATFORMIO_CI_SRC: ${{ matrix.example }}
