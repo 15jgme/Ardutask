@@ -50,7 +50,7 @@ jobs:
 
 
     - name: Run PlatformIO
-      run: 
+      run: |
         cd D:/a/Ardutask/Ardutask-demo-project
         pio run --environment native
       env:
