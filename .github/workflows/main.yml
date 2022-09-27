@@ -46,13 +46,12 @@ jobs:
       
     - name: Import Ardutask
       run: |
-        cd D:/a/Ardutask/Ardutask-demo-project/lib
-        echo $GITHUB_WORKSPACE
-        echo GITHUB_WORKSPACE
-        cp GITHUB_WORKSPACE .
-        cd ..
+        cp -r D:/a/Ardutask/Ardutask D:/a/Ardutask/Ardutask-demo-project/lib
+
 
     - name: Run PlatformIO
-      run: pio run --environment native
+      run: 
+        cd D:/a/Ardutask/Ardutask-demo-project
+        pio run --environment native
       env:
         PLATFORMIO_CI_SRC: ${{ matrix.example }}
