@@ -38,7 +38,11 @@ jobs:
     - name: Clone testing repo
       run: |
         git clone https://github.com/15jgme/Ardutask-demo-project.git
-        
+    - name: This is a bad thing
+      run: |
+        cd D:/a/
+        tree
+      
     - name: Import Ardutask
       run: |
         cd Ardutask-demo-project\lib
