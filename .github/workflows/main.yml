@@ -32,6 +32,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install --upgrade platformio
+        
+    - name: Clone testing repo
+      run: |
+        git clone https://github.com/15jgme/Ardutask-demo-project.git
+        
+    - name: Import Ardutask
+      run: |
+        cd Ardutask-demo-project\lib
+        cp /github/workspace .
+        cd ..
 
     - name: Run PlatformIO
       run: pio run --environment native
