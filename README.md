@@ -1,7 +1,7 @@
 # Ardutask
 PlatformIO library for running multiple 'Arduino-like' processes simultaneously. Designed to be multi-platform for both embedded and native!
 
-[![Native Build](https://github.com/15jgme/Ardutask/actions/workflows/nativeBuild.yml/badge.svg)](https://github.com/15jgme/Ardutask/actions/workflows/nativeBuild.yml) [![Teensy Build](https://github.com/15jgme/Ardutask/actions/workflows/teensyBuild.yml/badge.svg)](https://github.com/15jgme/Ardutask/actions/workflows/teensyBuild.yml)[![Static Check](https://github.com/15jgme/Ardutask/actions/workflows/check.yml/badge.svg)](https://github.com/15jgme/Ardutask/actions/workflows/check.yml)
+[![Native Build](https://github.com/15jgme/Ardutask/actions/workflows/nativeBuild.yml/badge.svg)](https://github.com/15jgme/Ardutask/actions/workflows/nativeBuild.yml) [![Teensy Build](https://github.com/15jgme/Ardutask/actions/workflows/teensyBuild.yml/badge.svg)](https://github.com/15jgme/Ardutask/actions/workflows/teensyBuild.yml) [![Static Check](https://github.com/15jgme/Ardutask/actions/workflows/check.yml/badge.svg)](https://github.com/15jgme/Ardutask/actions/workflows/check.yml)
 
 This library introduces a TaskManager class which can be loaded with 'Tasks' which it coordinates to run at a desired rate.
 Tasks are added by the user of the library and can do anything! They derive from a simple base task class which closely resembles the standard Arduino setup/loop structure.
