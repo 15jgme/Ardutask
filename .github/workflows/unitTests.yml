@@ -9,7 +9,6 @@ jobs:
     strategy:
       matrix:
         example: [a/Ardutask/Ardutask/Tests/test1.cpp]
-
     steps:
     - uses: actions/checkout@v2
     - name: Cache pip
