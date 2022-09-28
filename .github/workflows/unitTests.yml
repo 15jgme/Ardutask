@@ -29,6 +29,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade platformio
     - name: Run PlatformIO
-      run: pio ci -e native -c ./lib/Ardutask/Tests/platformio.ini ./lib/Ardutask/Tests/test1.cpp
+      run: pio ci -e native -c D:/a/Ardutask/Ardutask/Tests/platformio.ini D:/a/Ardutask/Ardutask/Tests/test1.cpp
       env:
         PLATFORMIO_CI_SRC: ${{ matrix.example }}
