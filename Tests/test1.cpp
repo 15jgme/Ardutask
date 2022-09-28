@@ -1,3 +1,5 @@
+#if defined(_WIN32) 
+
 #include <unity.h>
 #include "Ardutask.h"
 #include <iostream>
@@ -135,3 +137,5 @@ int main(int argc, char **argv)
 
     return 0; 
 } 
+
+#endif
