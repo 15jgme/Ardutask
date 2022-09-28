@@ -11,6 +11,19 @@ int Taskmanager::LRT1List_size = 0;
 int Taskmanager::LRT2List_size = 0;
 volatile short Taskmanager::todoStackSize = 0;
 
+short Taskmanager::HRT1_overrun = 1;
+short Taskmanager::HRT2_overrun = 1;
+short Taskmanager::HRT3_overrun = 1;
+short Taskmanager::LRT1_overrun = 1;
+short Taskmanager::LRT2_overrun = 1;
+
+/* Values for dynamic divising gains */
+float Taskmanager::kp_HRT1 = 1.0;
+float Taskmanager::kp_HRT2 = 1.0;
+float Taskmanager::kp_HRT3 = 1.0;
+float Taskmanager::kp_LRT1 = 1.0;
+float Taskmanager::kp_LRT2 = 1.0;
+
 int Taskmanager::HRT1List[TASK_LIMIT];
 int Taskmanager::HRT2List[TASK_LIMIT];
 int Taskmanager::HRT3List[TASK_LIMIT];
@@ -139,10 +152,18 @@ void Taskmanager::HRT1_callback()
 {
     for(int i = 0; i < HRT1List_size; i++)
     {
-        if(taskList[HRT1List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+        if(taskList[HRT1List[i]]->updateShouldRun(int(HRT1_overrun*kp_HRT1)))
         {
-            todoStack[todoStackSize] = HRT1List[i]; // Add current task to todo stack
-            todoStackSize++;
+            if(todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+            {
+                todoStack[todoStackSize] = HRT1List[i]; // Add current task to todo stack
+                todoStackSize++;
+                if(HRT1_overrun>1){HRT1_overrun--;}
+            }
+            else
+            {
+                HRT1_overrun++;
+            }
         }
     }
 }
@@ -151,10 +172,18 @@ void Taskmanager::HRT2_callback()
 {
     for(int i = 0; i < HRT2List_size; i++)
     {
-        if(taskList[HRT2List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+        if(taskList[HRT2List[i]]->updateShouldRun(int(HRT2_overrun*kp_HRT2)))
         {
-            todoStack[todoStackSize] = HRT2List[i]; // Add current task to todo stack
-            todoStackSize++;
+            if(todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+            {
+                todoStack[todoStackSize] = HRT2List[i]; // Add current task to todo stack
+                todoStackSize++;
+                if(HRT2_overrun>1){HRT2_overrun--;}
+            }
+            else
+            {
+                HRT2_overrun++;
+            }
         }
     }
 }
@@ -163,10 +192,18 @@ void Taskmanager::HRT3_callback()
 {
     for(int i = 0; i < HRT3List_size; i++)
     {
-        if(taskList[HRT3List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+        if(taskList[HRT3List[i]]->updateShouldRun(int(HRT3_overrun*kp_HRT3)))
         {
-            todoStack[todoStackSize] = HRT3List[i]; // Add current task to todo stack
-            todoStackSize++;
+            if(todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+            {
+                todoStack[todoStackSize] = HRT3List[i]; // Add current task to todo stack
+                todoStackSize++;
+                if(HRT3_overrun>1){HRT3_overrun--;}
+            }
+            else
+            {
+                HRT3_overrun++;
+            }
         }
     }
 }
@@ -175,11 +212,19 @@ void Taskmanager::LRT1_callback()
 {
     for(int i = 0; i < LRT1List_size; i++)
     {
-        if(taskList[LRT1List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+        if(taskList[LRT1List[i]]->updateShouldRun(int(LRT1_overrun*kp_LRT1)))
         {
-            todoStack[todoStackSize] = LRT1List[i]; // Add current task to todo stack
-            todoStackSize++;
-        }
+            if(todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+            {
+                todoStack[todoStackSize] = LRT1List[i]; // Add current task to todo stack
+                todoStackSize++;
+                if(LRT1_overrun>1){LRT1_overrun--;}
+            }
+            else
+            {
+                LRT1_overrun++;
+            }   
+        }   
     }
 }
 
@@ -187,10 +232,18 @@ void Taskmanager::LRT2_callback()
 {
     for(int i = 0; i < LRT2List_size; i++)
     {
-        if(taskList[LRT2List[i]]->updateShouldRun(1) && todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+        if(taskList[LRT2List[i]]->updateShouldRun(int(LRT2_overrun*kp_LRT2)))
         {
-            todoStack[todoStackSize] = LRT2List[i]; // Add current task to todo stack
-            todoStackSize++;
+            if(todoStackSize < TASK_STACK_SIZE) // If we should run the task, and we're able to add it to the stack
+            {
+                todoStack[todoStackSize] = LRT2List[i]; // Add current task to todo stack
+                todoStackSize++;
+                if(LRT2_overrun>1){LRT2_overrun--;}
+            }
+            else
+            {
+                LRT2_overrun++;
+            }   
         }
     }
 }

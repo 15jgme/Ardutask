@@ -25,6 +25,19 @@ class Taskmanager
     static int LRT2List[TASK_LIMIT]; // LRT2 arrary list
     static int LRT2List_size; // Size of LRT2 list
 
+    static short HRT1_overrun; 
+    static short HRT2_overrun;
+    static short HRT3_overrun;
+    static short LRT1_overrun;
+    static short LRT2_overrun;
+
+    /* Gains for dynamic divising */
+    static float kp_HRT1;
+    static float kp_HRT2;
+    static float kp_HRT3;
+    static float kp_LRT1;
+    static float kp_LRT2;
+
     float HRT1_freq = 100.0f; // Frequency of HR timer 1, Hz
     float HRT2_freq = 50.0f; // Frequency of HR timer 2, Hz
     float HRT3_freq = 10.0f; // Frequency of HR timer 3, Hz
