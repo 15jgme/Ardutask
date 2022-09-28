@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        example: [D:/a/Ardutask/Ardutask/Tests/test1.cpp]
+        example: [D:/a/Ardutask/Ardutask/Tests/test1.cpp, D:/a/Ardutask/Ardutask/Tests/]
 
     steps:
     - uses: actions/checkout@v2
