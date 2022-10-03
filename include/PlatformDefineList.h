@@ -19,4 +19,9 @@ type of system. Tries to ensure easy crossplatform. */
         // typedef WindowsTimer timerType;
         #define timerType WindowsTimer
     #endif
+#elif defined(__linux__)
+    #if defined(NATIVE)
+        #include "unixTimer.h"
+        #define timerType UnixTimer
+    #endif
 #endif
