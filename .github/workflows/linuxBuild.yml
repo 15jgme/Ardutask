@@ -37,6 +37,7 @@ jobs:
 
     - name: Clone testing repo
       run: |
+        echo "$PWD"
         cd D:/a/Ardutask
         git clone -b linux_modifications https://github.com/15jgme/Ardutask-demo-project.git
       
