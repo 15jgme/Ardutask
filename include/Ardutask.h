@@ -37,19 +37,11 @@ void runMsgPump()
 #if defined(NATIVE)
 #include <boost/asio.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-// #include "Linux_io_service_wrapper.hpp"
 #include <io_define.h>
 #include <iostream>
 
-// Linux_io_service_wrapper * lio = new Linux_io_service_wrapper();
-// boost::asio::io_service io;
-// lio->setIO(*io);
-
 void runMsgPump()
 {
-    // lio->run();
-    // std::cout<<io.run()<<std::endl;
-    std::cout<<"asjdaskdjh"<<std::endl;
     io.run_one();
 }
 #endif

@@ -3,10 +3,9 @@
 
 #include "unixTimer.h"
 #include "MultiTime.h"
-#include "io_define.h"
+extern boost::asio::io_service io;
 #include <iostream>
 
-// static boost::asio::io_service io;
 
 UnixTimer::UnixTimer(void (*fn_cb_s)(), int label_s):MultiTime(*fn_cb_s, label_s)
 {
@@ -14,7 +13,6 @@ UnixTimer::UnixTimer(void (*fn_cb_s)(), int label_s):MultiTime(*fn_cb_s, label_s
 
 void UnixTimer::linux_callback_wrapper()
 {
-    std::cout<<"bizz"<<std::endl;
     fn_cb();
     t->expires_at(t->expires_at() + boost::posix_time::seconds(int(1.0f/rate)));
     t->async_wait(boost::bind(&UnixTimer::linux_callback_wrapper, this));
