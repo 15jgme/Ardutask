@@ -26,11 +26,9 @@ jobs:
 
     - name: Set up Python
       uses: actions/setup-python@v2
-      
-    - name: Install Boost
-      uses: MarkusJx/install-boost@v2.4.0
-      with:
-        boost_version: 1.73.0
+        
+    - name: Install Boost2
+      run: sudo apt-get install libboost-all-dev
       
     - name: Install PlatformIO
       run: |
