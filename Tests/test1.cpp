@@ -1,11 +1,18 @@
-#if defined(_WIN32) 
+#if defined(NATIVE)
 
 #include <unity.h>
 #include "Ardutask.h"
 #include <iostream>
-#include "native_test_bl.hpp"
 
-#define ITERS_MAX 2000
+#if defined(_WIN32) 
+#include "native_test_bl.hpp"
+#endif
+
+#if defined(__linux__)
+#include "native_test_bl_linux.hpp"
+#endif
+
+#define ITERS_MAX 5000
 
 Taskmanager * taskMan;
 
@@ -22,38 +29,46 @@ bool t5_res;
 NativeTestBl * t6;
 bool t6_res;
 
-void setUp(void) {
-    // set stuff up here
-    taskMan = new Taskmanager();
-    t1 = new NativeTestBl(40.0f, &t1_res); //initialize at 40hz 
-    taskMan->addtask(t1);
-    t2 = new NativeTestBl(20.1f, &t2_res); //initialize at 20hz
-    taskMan->addtask(t2);
-    t3 = new NativeTestBl(5.0f, &t3_res); //initialize at 5hz
-    taskMan->addtask(t3);
-    t4 = new NativeTestBl(1.0f, &t4_res); //initialize at 1hz
-    taskMan->addtask(t4);
-    t5 = new NativeTestBl(0.1f, &t5_res); //initialize at 0.1hz
-    taskMan->addtask(t5);
-    t6 = new NativeTestBl(0.05f, &t6_res); //initialize at 0.05hz
-    taskMan->addtask(t6);
+bool first_run = true;
+bool last_run = true;
 
-    for(int i = 0; i<ITERS_MAX; i++)
-    {
-        taskMan->run();
-        runMsgPump();
+void setUp(void) {
+    if(first_run){
+        // set stuff up here
+        taskMan = new Taskmanager();
+        t1 = new NativeTestBl(40.0f, &t1_res); //initialize at 40hz 
+        taskMan->addtask(t1);
+        t2 = new NativeTestBl(20.1f, &t2_res); //initialize at 20hz
+        taskMan->addtask(t2);
+        t3 = new NativeTestBl(5.0f, &t3_res); //initialize at 5hz
+        taskMan->addtask(t3);
+        t4 = new NativeTestBl(1.0f, &t4_res); //initialize at 1hz
+        taskMan->addtask(t4);
+        t5 = new NativeTestBl(0.1f, &t5_res); //initialize at 0.1hz
+        taskMan->addtask(t5);
+        t6 = new NativeTestBl(0.05f, &t6_res); //initialize at 0.05hz
+        taskMan->addtask(t6);
+
+        for(int i = 0; i<ITERS_MAX; i++)
+        {
+            taskMan->run();
+            runMsgPump();
+        }
+        first_run = false;
     }
 }
 
 void tearDown(void) {
-    // clean stuff up here
-    delete taskMan;
-    delete t1;
-    delete t2;
-    delete t3;
-    delete t4;
-    delete t5;
-    delete t6;
+    if(last_run){
+        // clean stuff up here
+        delete taskMan;
+        delete t1;
+        delete t2;
+        delete t3;
+        delete t4;
+        delete t5;
+        delete t6;
+    }
 }
 
 void test_rate_t1()
@@ -131,6 +146,7 @@ int main(int argc, char **argv)
     RUN_TEST(test_rate_t3); 
     RUN_TEST(test_rate_t4); 
     RUN_TEST(test_rate_t5); 
+    last_run = false;
     RUN_TEST(test_rate_t6); 
 
     UNITY_END(); 
