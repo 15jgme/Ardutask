@@ -34,22 +34,21 @@ jobs:
         
     - name: Checkout
       uses: actions/checkout@v2.4.2
-    - name: This is bad
-      run: echo "$PWD"
+
     - name: Clone testing repo
       run: |
         echo "$PWD"
-        cd D:/a/Ardutask
+        cd /home/runner/work/Ardutask
         git clone -b linux_modifications https://github.com/15jgme/Ardutask-demo-project.git
       
     - name: Import Ardutask
       run: |
-        cp -r D:/a/Ardutask/Ardutask D:/a/Ardutask/Ardutask-demo-project/lib
+        cp -r /home/runner/work/Ardutask/Ardutask /home/runner/work/Ardutask/Ardutask-demo-project/lib
 
 
     - name: Run PlatformIO
       run: |
-        cd D:/a/Ardutask/Ardutask-demo-project
+        cd /home/runner/work/Ardutask/Ardutask-demo-project
         pio lib --global install PlatformHelpers
         pio run --environment linux
       env:
