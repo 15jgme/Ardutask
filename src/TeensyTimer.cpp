@@ -3,11 +3,6 @@
 #include "TeensyTimer.h"
 #include "MultiTime.h"
 
-void foo()
-{
-    digitalWrite(13,HIGH);   
-}
-
 TeensyTimer::TeensyTimer(void (*fn_cb_s)(), int label_s):MultiTime(*fn_cb_s, label_s)
 {
     fn_cb();
